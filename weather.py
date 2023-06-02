@@ -1,5 +1,8 @@
 import csv
 from datetime import datetime
+# import statistics module
+from statistics import mean
+
 
 DEGREE_SYBMOL = u"\N{DEGREE SIGN}C"
 
@@ -17,14 +20,21 @@ def format_temperature(temp):
 
 
 def convert_date(iso_string):
-    """Converts and ISO formatted date into a human readable format.
+    """Converts an ISO formatted date into a human readable format.
 
     Args:
-        iso_string: An ISO date string..
+        iso_string: An ISO date string.
     Returns:
         A date formatted like: Weekday Date Month Year e.g. Tuesday 06 July 2021
     """
-    pass
+
+#   convert date string to date type
+    date_converted = datetime.strptime(iso_string, '%Y-%m-%dT%H:%M:%S%z')
+
+#   format date 
+    date_formatted = date_converted.strftime("%A %d %B %Y")
+    # print("date_form",date_formatted)
+    return date_formatted
 
 
 def convert_f_to_c(temp_in_farenheit):
@@ -35,7 +45,11 @@ def convert_f_to_c(temp_in_farenheit):
     Returns:
         A float representing a temperature in degrees celcius, rounded to 1dp.
     """
-    pass
+
+#   convert to float and round to 1 decimal place
+    temp_celsius = round(( float(temp_in_farenheit) - 32 ) * 5/9, 1)
+    # print(temp_celsius)
+    return temp_celsius
 
 
 def calculate_mean(weather_data):
@@ -46,7 +60,13 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-    pass
+
+#   convert the list to float in case there is string supplied in list
+    weather_data_converted = [float(item) for  item in weather_data]
+    # print(mean(weather_data_converted))
+    return mean(weather_data_converted)
+
+    # return mean(weather_data)
 
 
 def load_data_from_csv(csv_file):
@@ -57,7 +77,32 @@ def load_data_from_csv(csv_file):
     Returns:
         A list of lists, where each sublist is a (non-empty) line in the csv file.
     """
-    pass
+
+    # with open handles file close
+    with open(csv_file, mode = 'r', ) as file:
+
+        # skip header line 1
+        file = file.readlines()[1:]
+        # read file of lists (exclude empty lines)                    
+        # lines = list(line for line in l.strip() for l in file) if line)
+        csv_file_read = csv.reader(file)
+        
+        # convert any values to integers
+        csv_file_list = []
+        for lines in csv_file_read:
+            lines[1] = int(lines[1])
+            lines[2] = int(lines[2])     
+            csv_file_list.append(lines)       
+            # print(lines)
+
+        # print("csv file list", csv_file_list)
+
+        # for lines in csv_file_read:
+        #     csv_file_list.append([lines.rstrip('\n')])
+            # csv_file_list.extend([lines])
+            # csv_file = lines.splitlines()
+
+        return csv_file_list
 
 
 def find_min(weather_data):
