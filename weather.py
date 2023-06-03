@@ -80,13 +80,19 @@ def load_data_from_csv(csv_file):
 
     # with open handles file close
     with open(csv_file, mode = 'r', ) as file:
-
         # skip header line 1
         file = file.readlines()[1:]
-        # read file of lists (exclude empty lines)                    
+        non_blank_lines = (line.rstrip() for line in file) # all lines inlcuding blanks
+        # read file of lists (exclude empty lines)        
+        # non_blank_lines = list(line for line in non_blank_lines if line) # Non-blank lines an d add to list
+        non_blank_lines = (line for line in non_blank_lines if line) # Non-blank lines an d add to list
+        # print(non_blank_lines)
+
+            
         # lines = list(line for line in l.strip() for l in file) if line)
-        csv_file_read = csv.reader(file)
-        
+        # csv_file_read = csv.reader(file)
+        csv_file_read = csv.reader(non_blank_lines)
+
         # convert any values to integers
         csv_file_list = []
         for lines in csv_file_read:
@@ -113,7 +119,26 @@ def find_min(weather_data):
     Returns:
         The minium value and it's position in the list.
     """
-    pass
+
+    # handle an empty list
+    if len(weather_data) > 0:
+
+    # if strings in list - set the values to float 
+        if type(weather_data[0]) == str:
+            weather_data = [float(i) for i in weather_data]
+
+    # find min temp 
+        min_temp = min(weather_data)
+    
+    # handle where the min may exist more than once in list
+        min_index = [i for i in range(len(weather_data)) if weather_data[i] == min_temp]
+
+    # find the last index where min exists in list
+        min_position = min_temp, min_index[-1]
+    else:
+        min_position = ()
+    
+    return min_position
 
 
 def find_max(weather_data):
@@ -124,7 +149,25 @@ def find_max(weather_data):
     Returns:
         The maximum value and it's position in the list.
     """
-    pass
+    # handle an empty list
+    if len(weather_data) > 0:
+
+    # if strings in list - set the values to float 
+        if type(weather_data[0]) == str:
+            weather_data = [float(i) for i in weather_data]
+
+    # find min temp 
+        max_temp = max(weather_data)
+    
+    # handle where the min may exist more than once in list
+        max_index = [i for i in range(len(weather_data)) if weather_data[i] == max_temp]
+        
+    # find the last index where min exists in list
+        max_position = max_temp, max_index[-1]
+    else:
+        max_position = ()
+    
+    return max_position
 
 
 def generate_summary(weather_data):
@@ -135,7 +178,67 @@ def generate_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    pass
+    #   ---------------------    
+    #   Example output
+    #   ---------------------
+    #   5 Day Overview
+    #   The lowest temperature will be 9.4°C, and will occur on Friday 02 July 2021.
+    #   The highest temperature will be 20.0°C, and will occur on Saturday 03 July 2021.
+    #   The average low this week is 12.2°C.
+    #   The average high this week is 17.8°C.
+
+    
+    weather_data_summary = str(len(weather_data)) + " Day Overview\n"
+
+    # add a for loop to loop through the 
+    day_list = []
+    min_list = []
+    max_list = []
+
+    # create list of dates, min, max
+    for i in range(len(weather_data)):
+        day_list.append(weather_data[i][0])
+        min_list.append(weather_data[i][1])
+        max_list.append(weather_data[i][2])
+   
+    # get lowest temp
+    min_temp = min(min_list)
+
+    # get index of lowest temp and find day
+    min_index = [i for i in range(len(min_list)) if min_list[i] == min_temp]    
+    min_date = day_list[min_index[-1]]           
+
+    # convert date format
+    min_day = convert_date(min_date)
+
+    # get highest temp 
+    max_temp = max(max_list)    
+
+    # get index of highest temp and find day
+    max_index = [i for i in range(len(max_list)) if max_list[i] == max_temp]
+    max_date = day_list[max_index[-1]]   
+
+    # convert date format
+    max_day = convert_date(max_date)
+
+    # get average low
+    mean_min = mean(min_list)
+
+    # get average high
+    mean_max = mean(max_list)
+
+    # convert fahrenheit to celsius
+    weather_data_summary += "  The lowest temperature will be " + format_temperature(convert_f_to_c(min_temp)) 
+    weather_data_summary += ", and will occur on " + min_day +".\n"
+    weather_data_summary += "  The highest temperature will be " + format_temperature(convert_f_to_c(max_temp)) 
+    weather_data_summary += ", and will occur on " + max_day +".\n"    
+    weather_data_summary += "  The average low this week is " + format_temperature(convert_f_to_c(mean_min)) +".\n"
+    weather_data_summary += "  The average high this week is " + format_temperature(convert_f_to_c(mean_max)) + ".\n"
+
+    # print(weather_data_summary)
+    return weather_data_summary    
+    
+
 
 
 def generate_daily_summary(weather_data):
@@ -146,4 +249,30 @@ def generate_daily_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    pass
+    #   ---------------------
+    #   Example output
+    #   ---------------------    
+    #   ---- Friday 02 July 2021 ----
+    #   Minimum Temperature: 9.4°C
+    #   Maximum Temperature: 19.4°C
+    
+    weather_data_summary = ""
+
+    # add a for loop to loop through the 
+    for i in range(len(weather_data)):
+
+        weather_data_summary += "---- "
+
+        # convert date format
+        weather_data_summary += convert_date(weather_data[i][0])
+        weather_data_summary += " ----" + "\n"
+
+        # convert fahrenheit to celsius
+        min_temp = format_temperature(convert_f_to_c(weather_data[i][1]))
+        max_temp = format_temperature(convert_f_to_c(weather_data[i][2]))
+        
+        weather_data_summary += "  Minimum Temperature: " + str(min_temp) + "\n"
+        weather_data_summary += "  Maximum Temperature: " + str(max_temp) + "\n\n"
+
+    # print(weather_data_summary)
+    return weather_data_summary
