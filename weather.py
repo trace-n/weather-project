@@ -33,7 +33,8 @@ def convert_date(iso_string):
 
 #   format date 
     date_formatted = date_converted.strftime("%A %d %B %Y")
-    # print("date_form",date_formatted)
+
+#   return formatted date
     return date_formatted
 
 
@@ -48,7 +49,8 @@ def convert_f_to_c(temp_in_farenheit):
 
 #   convert to float and round to 1 decimal place
     temp_celsius = round(( float(temp_in_farenheit) - 32 ) * 5/9, 1)
-    # print(temp_celsius)
+
+#   return converted date to celcius
     return temp_celsius
 
 
@@ -63,10 +65,9 @@ def calculate_mean(weather_data):
 
 #   convert the list to float in case there is string supplied in list
     weather_data_converted = [float(item) for  item in weather_data]
-    # print(mean(weather_data_converted))
-    return mean(weather_data_converted)
 
-    # return mean(weather_data)
+#   return mean temperature    
+    return mean(weather_data_converted)
 
 
 def load_data_from_csv(csv_file):
@@ -82,32 +83,22 @@ def load_data_from_csv(csv_file):
     with open(csv_file, mode = 'r', ) as file:
         # skip header line 1
         file = file.readlines()[1:]
-        non_blank_lines = (line.rstrip() for line in file) # all lines inlcuding blanks
-        # read file of lists (exclude empty lines)        
-        # non_blank_lines = list(line for line in non_blank_lines if line) # Non-blank lines an d add to list
-        non_blank_lines = (line for line in non_blank_lines if line) # Non-blank lines an d add to list
-        # print(non_blank_lines)
+        # all lines including blanks
+        non_blank_lines = (line.rstrip() for line in file) 
 
-            
-        # lines = list(line for line in l.strip() for l in file) if line)
-        # csv_file_read = csv.reader(file)
+        # read file (exclude empty lines)        
+        non_blank_lines = (line for line in non_blank_lines if line) 
+
         csv_file_read = csv.reader(non_blank_lines)
 
-        # convert any values to integers
+        # convert any values to integers and add to a list of lists
         csv_file_list = []
         for lines in csv_file_read:
             lines[1] = int(lines[1])
             lines[2] = int(lines[2])     
             csv_file_list.append(lines)       
-            # print(lines)
 
-        # print("csv file list", csv_file_list)
-
-        # for lines in csv_file_read:
-        #     csv_file_list.append([lines.rstrip('\n')])
-            # csv_file_list.extend([lines])
-            # csv_file = lines.splitlines()
-
+        # return a list of lists from csv file
         return csv_file_list
 
 
@@ -138,6 +129,7 @@ def find_min(weather_data):
     else:
         min_position = ()
     
+    # return minimum temp and position in list
     return min_position
 
 
@@ -167,6 +159,7 @@ def find_max(weather_data):
     else:
         max_position = ()
     
+    # return max temp and position in list
     return max_position
 
 
@@ -178,19 +171,10 @@ def generate_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    #   ---------------------    
-    #   Example output
-    #   ---------------------
-    #   5 Day Overview
-    #   The lowest temperature will be 9.4°C, and will occur on Friday 02 July 2021.
-    #   The highest temperature will be 20.0°C, and will occur on Saturday 03 July 2021.
-    #   The average low this week is 12.2°C.
-    #   The average high this week is 17.8°C.
 
-    
+    # start summary information    
     weather_data_summary = str(len(weather_data)) + " Day Overview\n"
 
-    # add a for loop to loop through the 
     day_list = []
     min_list = []
     max_list = []
@@ -235,7 +219,7 @@ def generate_summary(weather_data):
     weather_data_summary += "  The average low this week is " + format_temperature(convert_f_to_c(mean_min)) +".\n"
     weather_data_summary += "  The average high this week is " + format_temperature(convert_f_to_c(mean_max)) + ".\n"
 
-    # print(weather_data_summary)
+    # return summary of weather data 
     return weather_data_summary    
     
 
@@ -249,12 +233,6 @@ def generate_daily_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    #   ---------------------
-    #   Example output
-    #   ---------------------    
-    #   ---- Friday 02 July 2021 ----
-    #   Minimum Temperature: 9.4°C
-    #   Maximum Temperature: 19.4°C
     
     weather_data_summary = ""
 
@@ -274,5 +252,5 @@ def generate_daily_summary(weather_data):
         weather_data_summary += "  Minimum Temperature: " + str(min_temp) + "\n"
         weather_data_summary += "  Maximum Temperature: " + str(max_temp) + "\n\n"
 
-    # print(weather_data_summary)
+    # return daily summary weather data  
     return weather_data_summary
