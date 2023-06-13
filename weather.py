@@ -29,7 +29,7 @@ def convert_date(iso_string):
     """
 
 #   convert date string to date type
-    date_converted = datetime.strptime(iso_string, '%Y-%m-%dT%H:%M:%S%z')
+    date_converted = datetime.strptime(iso_string, "%Y-%m-%dT%H:%M:%S%z")
 
 #   format date 
     date_formatted = date_converted.strftime("%A %d %B %Y")
@@ -80,7 +80,7 @@ def load_data_from_csv(csv_file):
     """
 
     # with open handles file close
-    with open(csv_file, mode = 'r', ) as file:
+    with open(csv_file, mode = "r", ) as file:
         # skip header line 1
         # file contains list of rows from csv file including /n line character
         file = file.readlines()[1:]
