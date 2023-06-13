@@ -8,6 +8,9 @@ from tests.test_find_max import FindMaxTests
 from tests.test_generate_summary import GenerateSummaryTests
 from tests.test_generate_daily_summary import GenerateDailySummaryTests
 
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning) 
+
 runner = unittest.TextTestRunner()
 
 print("Running Tests...\n")

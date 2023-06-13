@@ -82,21 +82,27 @@ def load_data_from_csv(csv_file):
     # with open handles file close
     with open(csv_file, mode = 'r', ) as file:
         # skip header line 1
+        # file contains list of rows from csv file including /n line character
         file = file.readlines()[1:]
-        # all lines including blanks
-        non_blank_lines = (line.rstrip() for line in file) 
 
-        # read file (exclude empty lines)        
-        non_blank_lines = (line for line in non_blank_lines if line) 
+        # use list comprehension to execute each line with a for loop
+        # first step - rstrip removes trailing character new line \n from each item in line        
+        file = [line.rstrip() for line in file]          
 
-        csv_file_read = csv.reader(non_blank_lines)
+        # second step - loop through and add the line if not blank (exclude empty lines)        
+        file = [line for line in file if line]
 
-        # convert any values to integers and add to a list of lists
+        #read file
+        csv_file_read = csv.reader(file)
+
+        # final list to return
         csv_file_list = []
-        for lines in csv_file_read:
-            lines[1] = int(lines[1])
-            lines[2] = int(lines[2])     
-            csv_file_list.append(lines)       
+
+        # convert any values to integers and add to final list of lists 
+        for line in csv_file_read:        
+            line[1] = int(line[1])
+            line[2] = int(line[2])     
+            csv_file_list.append(line)       
 
         # return a list of lists from csv file
         return csv_file_list
