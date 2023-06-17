@@ -185,20 +185,19 @@ def generate_summary(weather_data):
     for i in range(len(weather_data)):
         weather_summary[weather_data[i][0]] = { "Min": weather_data[i][1], "Max": weather_data[i][2] }
 
-    # Finds the max temperature, keys for max temperature if more than one instance, mean max temp using list comprehension
+    # finds the max temperature, keys for max temperature if more than one instance, mean max temp using list comprehension
     # ---------------------------------------------------
     max_temp = max([value["Max"] for key, value in weather_summary.items()])
     max_temp_keys = [key for key, value in weather_summary.items() if value["Max"] == max_temp]
     mean_max = mean([value["Max"] for key, value in weather_summary.items()])
 
-    # Finds the min temperature, keys for min temperature if more than one instance, mean min temp using list comprehension
+    # finds the min temperature, keys for min temperature if more than one instance, mean min temp using list comprehension
     # ---------------------------------------------------
     min_temp = min([value["Min"] for key, value in weather_summary.items()])    
     min_temp_keys = [key for key, value in weather_summary.items() if value["Min"] == min_temp]    
     mean_min = mean([value["Min"] for key, value in weather_summary.items()])
 
-    # Get last index of max/min temp if there is more than one instance 
-    # Convert to date format
+    # get last index of max/min temp if there is more than one instance - convert to date format
     max_day = convert_date(max_temp_keys[-1])    
     min_day = convert_date(min_temp_keys[-1])
 
@@ -211,7 +210,7 @@ def generate_summary(weather_data):
     weather_data_summary += "  The average low this week is " + format_temperature(convert_f_to_c(mean_min)) +".\n"
     weather_data_summary += "  The average high this week is " + format_temperature(convert_f_to_c(mean_max)) + ".\n" 
 
-    # Return summary of weather data 
+    # return summary of weather data 
     return weather_data_summary    
 
 
