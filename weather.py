@@ -201,7 +201,7 @@ def generate_summary(weather_data):
     max_day = convert_date(max_temp_keys[-1])    
     min_day = convert_date(min_temp_keys[-1])
 
-    # Output to string - format and convert temps fahrenheit to celcius    
+    # output to string - format and convert temps fahrenheit to celcius    
     weather_data_summary = str(len(weather_data)) + " Day Overview\n"
     weather_data_summary += "  The lowest temperature will be " + format_temperature(convert_f_to_c(min_temp))  
     weather_data_summary += ", and will occur on " + min_day +".\n"
