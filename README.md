@@ -42,7 +42,7 @@
 ### GenerateSummaryTests
 - this contains 3 tests
 - this calls function generate_summary in weather.py script
-- A list of lists for weather data is provided, a string is returned with summary information based on the data for several days with the minimum and maximum temperature and which day this will occur on for the period. The average minimum and average maximum temperature is also returned
+- A list of lists for weather data is provided, a string is returned with summary information based on the data for several days with the minimum and maximum temperature and which day this will occur on for the period. The average minimum and average maximum temperature is also returned. If there is more than one occurrence of min/max temperature, this will take the latest date to return
 ### GenerateDailySummaryTests
 - this contains 3 tests
 - this calls function generate_daily_summary in weather.py script 

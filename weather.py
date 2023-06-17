@@ -154,13 +154,13 @@ def find_max(weather_data):
         if type(weather_data[0]) == str:
             weather_data = [float(i) for i in weather_data]
 
-    # find min temp 
+    # find max temp 
         max_temp = max(weather_data)
     
-    # handle where the min may exist more than once in list
+    # handle where the max may exist more than once in list
         max_index = [i for i in range(len(weather_data)) if weather_data[i] == max_temp]
         
-    # find the last index where min exists in list
+    # find the last index where max exists in list
         max_position = max_temp, max_index[-1]
     else:
         max_position = ()
@@ -178,56 +178,41 @@ def generate_summary(weather_data):
         A string containing the summary information.
     """
 
-    # start summary information    
-    weather_data_summary = str(len(weather_data)) + " Day Overview\n"
+    # create a dictionary with the weather data provided
+    weather_summary = {}
 
-    day_list = []
-    min_list = []
-    max_list = []
-
-    # create list of dates, min, max
+    # add to dictionary - date as key with nested dictionary of Min and Max values 
     for i in range(len(weather_data)):
-        day_list.append(weather_data[i][0])
-        min_list.append(weather_data[i][1])
-        max_list.append(weather_data[i][2])
-   
-    # get lowest temp
-    min_temp = min(min_list)
+        weather_summary[weather_data[i][0]] = { "Min": weather_data[i][1], "Max": weather_data[i][2] }
 
-    # get index of lowest temp and find day
-    min_index = [i for i in range(len(min_list)) if min_list[i] == min_temp]    
-    min_date = day_list[min_index[-1]]           
+    # Finds the max temperature, keys for max temperature if more than one instance, mean max temp using list comprehension
+    # ---------------------------------------------------
+    max_temp = max([value["Max"] for key, value in weather_summary.items()])
+    max_temp_keys = [key for key, value in weather_summary.items() if value["Max"] == max_temp]
+    mean_max = mean([value["Max"] for key, value in weather_summary.items()])
 
-    # convert date format
-    min_day = convert_date(min_date)
+    # Finds the min temperature, keys for min temperature if more than one instance, mean min temp using list comprehension
+    # ---------------------------------------------------
+    min_temp = min([value["Min"] for key, value in weather_summary.items()])    
+    min_temp_keys = [key for key, value in weather_summary.items() if value["Min"] == min_temp]    
+    mean_min = mean([value["Min"] for key, value in weather_summary.items()])
 
-    # get highest temp 
-    max_temp = max(max_list)    
+    # Get last index of max/min temp if there is more than one instance 
+    # Convert to date format
+    max_day = convert_date(max_temp_keys[-1])    
+    min_day = convert_date(min_temp_keys[-1])
 
-    # get index of highest temp and find day
-    max_index = [i for i in range(len(max_list)) if max_list[i] == max_temp]
-    max_date = day_list[max_index[-1]]   
-
-    # convert date format
-    max_day = convert_date(max_date)
-
-    # get average low
-    mean_min = mean(min_list)
-
-    # get average high
-    mean_max = mean(max_list)
-
-    # convert fahrenheit to celsius
-    weather_data_summary += "  The lowest temperature will be " + format_temperature(convert_f_to_c(min_temp)) 
+    # Output to string - format and convert temps fahrenheit to celcius    
+    weather_data_summary = str(len(weather_data)) + " Day Overview\n"
+    weather_data_summary += "  The lowest temperature will be " + format_temperature(convert_f_to_c(min_temp))  
     weather_data_summary += ", and will occur on " + min_day +".\n"
-    weather_data_summary += "  The highest temperature will be " + format_temperature(convert_f_to_c(max_temp)) 
+    weather_data_summary += "  The highest temperature will be " + format_temperature(convert_f_to_c(max_temp))
     weather_data_summary += ", and will occur on " + max_day +".\n"    
     weather_data_summary += "  The average low this week is " + format_temperature(convert_f_to_c(mean_min)) +".\n"
-    weather_data_summary += "  The average high this week is " + format_temperature(convert_f_to_c(mean_max)) + ".\n"
+    weather_data_summary += "  The average high this week is " + format_temperature(convert_f_to_c(mean_max)) + ".\n" 
 
-    # return summary of weather data 
+    # Return summary of weather data 
     return weather_data_summary    
-    
 
 
 
