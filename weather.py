@@ -190,12 +190,12 @@ def generate_summary(weather_data):
     min_temp, min_temp_index = find_min([value["Min"] for key, value in weather_summary.items()])
     max_temp, max_temp_index = find_max([value["Max"] for key, value in weather_summary.items()])
 
-    # finds the mean temp using function with list comprehension
+    # finds the min/max mean temp using function with list comprehension
     # ---------------------------------------------------
     mean_min = calculate_mean([value["Min"] for key, value in weather_summary.items()])   
     mean_max = calculate_mean([value["Max"] for key, value in weather_summary.items()])
 
-    # reference the min/max temp index for dictionary key and nested Day value
+    # reference the min/max temp index for dictionary key and nested dictionlary key value "Day"
     min_day = convert_date(weather_summary.get(min_temp_index).get("Day"))      
     max_day = convert_date(weather_summary.get(max_temp_index).get("Day"))  
 
@@ -210,7 +210,6 @@ def generate_summary(weather_data):
 
     # return summary of weather data 
     return weather_data_summary    
-
 
 
 def generate_daily_summary(weather_data):
