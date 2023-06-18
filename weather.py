@@ -181,25 +181,23 @@ def generate_summary(weather_data):
     # create a dictionary with the weather data provided
     weather_summary = {}
 
-    # add to dictionary - date as key with nested dictionary of Min and Max values 
+    # add weather data to dictionary - index as key with nested dictionary of Day, Min and Max values 
     for i in range(len(weather_data)):
-        weather_summary[weather_data[i][0]] = { "Min": weather_data[i][1], "Max": weather_data[i][2] }
+        weather_summary[i] = { "Day": weather_data[i][0], "Min": weather_data[i][1], "Max": weather_data[i][2] }
 
-    # finds the max temperature, keys for max temperature if more than one instance, mean max temp using list comprehension
+    # finds the min/max temperature, index of min/max temp using function with list comprehension
     # ---------------------------------------------------
-    max_temp = max([value["Max"] for key, value in weather_summary.items()])
-    max_temp_keys = [key for key, value in weather_summary.items() if value["Max"] == max_temp]
-    mean_max = mean([value["Max"] for key, value in weather_summary.items()])
+    min_temp, min_temp_index = find_min([value["Min"] for key, value in weather_summary.items()])
+    max_temp, max_temp_index = find_max([value["Max"] for key, value in weather_summary.items()])
 
-    # finds the min temperature, keys for min temperature if more than one instance, mean min temp using list comprehension
+    # finds the mean temp using function with list comprehension
     # ---------------------------------------------------
-    min_temp = min([value["Min"] for key, value in weather_summary.items()])    
-    min_temp_keys = [key for key, value in weather_summary.items() if value["Min"] == min_temp]    
-    mean_min = mean([value["Min"] for key, value in weather_summary.items()])
+    mean_min = calculate_mean([value["Min"] for key, value in weather_summary.items()])   
+    mean_max = calculate_mean([value["Max"] for key, value in weather_summary.items()])
 
-    # get last index of max/min temp if there is more than one instance - convert to date format
-    max_day = convert_date(max_temp_keys[-1])    
-    min_day = convert_date(min_temp_keys[-1])
+    # reference the min/max temp index for dictionary key and nested Day value
+    min_day = convert_date(weather_summary.get(min_temp_index).get("Day"))      
+    max_day = convert_date(weather_summary.get(max_temp_index).get("Day"))  
 
     # output to string - format and convert temps fahrenheit to celcius    
     weather_data_summary = str(len(weather_data)) + " Day Overview\n"
