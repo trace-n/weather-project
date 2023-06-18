@@ -34,11 +34,11 @@
 ### FindMinTests
 - this contains 6 tests
 - this calls function find_min in weather.py script 
-- provide a list of temperatures, return the minimim value and it's position in the list
+- provide a list of temperatures, return the minimim value and it's last position in the list if there is more than one occurrence
 ### FindMaxTests
 - this contains 6 tests
 - this calls function find_max in weather.py script 
-- provide a list of temperatures, return the maximum value and it's position in the list
+- provide a list of temperatures, return the maximum value and it's last position in the list if there is more than one occurrence
 ### GenerateSummaryTests
 - this contains 3 tests
 - this calls function generate_summary in weather.py script
