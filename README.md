@@ -16,16 +16,17 @@
 - 1 function is supplied in **weather.py** script to format a string with degrees celcius symbols
 
 ### ConvertDateTests 
- No. Tests | Function Called | From Script 
-| :---: | :---: | :---:
-4 | convert_date | weather.py
+ No. Tests | Function Called | From Script | Description
+| :---: | :---: | :---: | :--- 
+4 | convert_date | weather.py | Provide an iso date format to be formatted as Weekday Date Month Year
 - this contains 4 tests 
 - this calls function **convert_date** in **weather.py** script 
 - provide an iso date format to be formatted as Weekday Date Month Year
 ### ConvertTempTests 
  No. Tests | Function Called | From Script | Description
 | :---: | :---: | :---: | :---
-4 | convert_f_to_c | weather.py | Provide a temperature in fahrenheit and return temperature in degrees celcius, rounded to 1 decimal place
+4 | convert_f_to_c | weather.py | Provide a temperature in fahrenheit 
+**Return**: temperature in degrees celcius, rounded to 1 decimal place
 - this contains 4 tests 
 - this calls function **convert_f_to_c** in **weather.py** script 
 - provide a temperature in fahrenheit and return temperature in degrees celcius, rounded to 1 decimal place
