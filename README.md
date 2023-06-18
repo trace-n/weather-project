@@ -7,7 +7,7 @@
 ## Screenshots of run_tests.py 
 
 - Screenshot of unit test being run and successful results
-![ Screenshot of results]( ./run_tests_screenshot_results.png )
+![ Screenshot of results]( ./run_tests_screenshot_results.png "Test results screenshot")
 
 ## Details of Unit Tests
 
@@ -16,10 +16,16 @@
 - 1 function is supplied in **weather.py** script to format a string with degrees celcius symbols
 
 ### ConvertDateTests 
+ No. Tests | Function Called | From Script 
+| :---: | :---: | :---:
+4 | convert_date | weather.py
 - this contains 4 tests 
 - this calls function **convert_date** in **weather.py** script 
 - provide an iso date format to be formatted as Weekday Date Month Year
 ### ConvertTempTests 
+ No. Tests | Function Called | From Script | Description
+| :---: | :---: | :---: | :---
+4 | convert_f_to_c | weather.py | Provide a temperature in fahrenheit and return temperature in degrees celcius, rounded to 1 decimal place
 - this contains 4 tests 
 - this calls function **convert_f_to_c** in **weather.py** script 
 - provide a temperature in fahrenheit and return temperature in degrees celcius, rounded to 1 decimal place
