@@ -9,6 +9,11 @@
 - Screenshot of unit test being run and successful results
 ![ Screenshot of results]( ./run_tests_screenshot_results.png "Test results screenshot")
 
+## High Level Flow of Project
+
+- A high level flow of the scripts and how they are called is provided in the screenshot
+![ High Level Flow ]( ./project_overview.png "High Level Flow of Project")
+
 ## Details of Unit Tests
 
 - A summary of each unit test is provided below
